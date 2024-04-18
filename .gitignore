@@ -1,0 +1,7 @@
+__pycache__/*
+out/*
+tmp/*
+*.code-workspace
+CIST-005B-coffee/*
+*.bak.*
+

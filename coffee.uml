@@ -1,0 +1,189 @@
+' Bertrand Blanc (Alan Turing)
+@startuml
+
+class Employee{
+    - id
+
+    # static primary_key()
+    + __init__(name=None)
+    + __str__()
+}
+
+class Employees{
+    + fill(*args,**kwargs)
+}
+LinkedList <|-- Employees
+
+
+class Meeting{
+    - employee1
+    - employee2
+
+    + __init__(employee1, employee2)
+    + __str__()
+}
+Meeting "2" o-- "1" Employee
+
+
+class _Week {
+    - planning
+    - endless : to generate the data for many weeks
+    - signal : signal for multi-threading
+    - algo : sorting strategy
+
+    + __init__(planning,endless=False,signal=None,algo=0)
+    + __iter__()
+    + __next__()
+    + check(pairing) : validate the paired employees
+}
+
+
+class Coffee{
+    - employees
+    - planning
+
+    + __init__(employees)
+    + __len__()
+    + __iter__()
+    # reset()
+    + feed(*,endless=False,asynchronous_signal=None,sorting_algo=None):augmented iterator 
+    + schedule(*,termination=None,sorting_algo=0)
+
+}
+
+Coffee "many" *-- "1" _Week
+_Week "1" o-- "many" Coffee
+Coffee "1" o-- "1" Employees
+Employees "many" o-- "many" Employee
+
+package Lists {
+    class LinkedList{
+    }
+}
+Coffee o-- LinkedList
+
+class Vertex{
+    # id
+    # data
+    # neighbors
+
+    + __init__(id,data,neighbors=None)
+    + __hash__()
+    + __len__()
+    + __eq__(other)
+    + __iter__()
+    + __str__()
+
+    + add(other)
+    + remove()
+}
+
+class Graph{
+    - _vertices
+
+    + vertices()
+    + __init__(vertices)
+    + __len__()
+    + __getitem__(idx)
+    + __iter__()
+    + __str__()
+
+    + len_edges()
+    + add(vertex)
+
+}
+Graph "many" o-- "many" Vertex
+Coffee o-- Graph
+
+class Main{
+    - _parser
+    - _args
+
+    + __init__(*args,**kargs)
+    # _cli()
+    # _dispatch()
+    # _author()
+    # _run()
+    # _terminate(exit_)
+}
+
+Main "many" *-- Employee
+Main "1" o-- Coffee
+
+class Timer{
+    # enable
+    # timeout
+
+    + __init__(enable=True, timeout=None)
+    + __call__(*args, **kargs)
+}
+Main *-- Timer: decorator
+
+
+note left of Coffee
+BAD:
+$> py ./main.py --employees 6 
+|=Employees|= [E001, E002, E003, E004, E005, E006]|
+|week 1| [(E003, E006), (E002, E005), (E001, E004)]|
+|week 2| [(E004, E006), (E002, E003), (E001, E005)]|
+|week 3| [(E001, E002), (E003, E004), (E005, E006)]|
+|week 4| [(E003, E005), (E002, E004), (E001, E006)]|
+|week 5| [(E001, E003), (E002, E006), (E004, E005)]|
+
+DICT:
+$> py ./main.py --employees 6 &#45;&#45;weeks 6 &#45;&#45;sorting 2 &#45;&#45;timer
+|=Employees|= [E001, E002, E003, E004, E005, E006]|
+|week 1| [(E001, E006), (E002, E005), (E003, E004)]|
+|week 2| [(E001, E005), (E002, E004), (E003, E006)]|
+|week 3| [(E002, E003), (E005, E006), (E001, E004)]|
+|week 4| [(E004, E006), (E001, E002), (E003, E005)]|
+|week 5| [(E004, E005), (E002, E006), (E001, E003)]|
+|(Repeat)week 6| [(E001, E006), (E002, E005), (E003, E004)]|
+
+elapsed time: 00 minutes 00 seconds
+
+MATRIX:
+$> py ./main.py -e 6 &#45;&#45;w 8 &#45;&#45;sorting 4
+|=Employees|= [E001, E002, E003, E004, E005, E006]|
+|week 1| [(E003, E006), (E001, E004), (E002, E005)]|
+|week 2| [(E003, E004), (E005, E006), (E001, E002)]|
+|week 3| [(E004, E005), (E002, E006), (E001, E003)]|
+|week 4| [(E002, E003), (E004, E006), (E001, E005)]|
+|week 5| [(E003, E005), (E002, E004), (E001, E006)]|
+|(Repeat)week 6| [(E001, E005), (E002, E004), (E003, E006)]|
+|week 7| [(E002, E003), (E005, E006), (E001, E004)]|
+|week 8| [(E004, E006), (E002, E005), (E001, E003)]|
+end note
+
+
+note right of Main
+usage: main.py [-h] [--author] [--sorting [{0,1,2,3,4}]] [--timer] [--timeout N] --employees <integer> [--weeks <integer>]
+
+Creates the weekly coffee pairing for the employees
+
+options:
+  -h, --help            show this help message and exit
+  --author              author
+  --sorting [{0,1,2,3,4}]
+                        sorting mechanism to use. Different sorting strategies
+  --timer               enables the timer to monitor the elapsed time
+  --timeout N           aborts the execution after N seconds. Dafault to 1s. May help giving more time to complete
+  --employees <integer>, -e <integer>
+                        number of employees
+  --weeks <integer>, -w <integer>
+                        generate the pairing for this number of weeks
+
+Thanks for using my program
+end note
+
+
+note top of Coffee
+|=ID    |= sorting strategy|
+|-1     | default - all sorting strategies are tried until one is working, if any|
+|0      | vertices sorted by number of neighbors, min first, lowest vertex first|
+|1      | vertices sorted by number of neighbors, max first, lowest vertex first|
+|2      | vertices sorted by number of neighbors, max first, highest vertex first|
+|3      | vertices sorted by number of neighbors, min first, highest vertex first|
+|4      | vertices are shuffled randomly|
+end note
+@enduml
