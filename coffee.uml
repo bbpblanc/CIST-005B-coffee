@@ -186,4 +186,5 @@ note top of Coffee
 |3      | vertices sorted by number of neighbors, min first, highest vertex first|
 |4      | vertices are shuffled randomly|
 end note
+
 @enduml
