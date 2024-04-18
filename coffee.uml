@@ -157,7 +157,7 @@ end note
 
 
 note right of Main
-usage: main.py [-h] [--author] [--sorting [{0,1,2,3,4}]] [--timer] [--timeout N] --employees <integer> [--weeks <integer>]
+usage: main.py [-h] [&#45;&#45;author] [&#45;&#45;sorting [{0,1,2,3,4}]] [&#45;&#45;timer] [&#45;&#45;timeout N] &#45;&#45;employees <integer> [&#45;&#45;weeks <integer>]
 
 Creates the weekly coffee pairing for the employees
 
