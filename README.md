@@ -35,7 +35,7 @@ Hence, $n-1$ weeks are needed to have all $n$ employees meeting each other once
 
 * $meeting_k = (employee_i, employee_j)_k, (i,j) \in [0,n[^2, i \neq j, k \in [0,\frac{n^2-n}{2}[$
 
-* $week_k = \{meeting_{t}\}_{t \in [0, \frac{n}{2}[}, k \in [0, n[$
+* $week_k = \{meeting_{t}\}_{t \in [0, \frac{n}{2}[}, k \in [1, n[$
 
 * $\forall i, j \in I_n, i \neq j, week_i \cap week_j = \emptyset$
 
