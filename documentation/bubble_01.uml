@@ -1,0 +1,40 @@
+@startuml
+state week_1{
+    state "employee 1" as e11
+    state "employee 2" as e12
+    state "employee 3" as e13
+    state "employee 4" as e14
+
+    e11 --> e12 : select
+    e11 --> e13 : reject
+    e11 --> e14 : reject
+    e12 --> e13 : reject
+    e12 --> e14 : reject
+    e13 --> e14 : select
+}
+state week_2 {
+    state "employee 1" as e21
+    state "employee 2" as e22
+    state "employee 3" as e23
+    state "employee 4" as e24
+
+    e21 --> e23 : select
+    e21 --> e24 : reject
+    e22 --> e23 : reject
+    e22 --> e24 : select
+}
+state week_3 {
+    state "employee 1" as e31
+    state "employee 2" as e32
+    state "employee 3" as e33
+    state "employee 4" as e34
+
+    e31 --> e34 : select
+    e32 --> e33 : select
+}
+[*] --> week_1
+week_1 --> week_2
+week_2 --> week_3
+week_3 --> good
+
+@enduml

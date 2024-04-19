@@ -1,0 +1,11 @@
+@startuml
+state employee_1 {
+}
+employee_1 --> employee_2
+employee_1 --> employee_3
+employee_1 --> employee_4
+employee_2 --> employee_3
+employee_2 --> employee_4
+employee_3 --> employee_4
+
+@enduml

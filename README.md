@@ -33,19 +33,11 @@ Every week, $n/2$ unique new pairs are created.
 
 Hence, $n-1$ weeks are needed to have all $n$ employees meeting each other once
 
-* $
-meeting_k = (employee_i, employee_j)_k, (i,j) \in [0,n[^2, i \neq j, k \in [0,\frac{n^2-n}{2}[
-$
+* $meeting_k = (employee_i, employee_j)_k, (i,j) \in [0,n[^2, i \neq j, k \in [0,\frac{n^2-n}{2}[$
 
+* $week_k = \{meeting_{t}\}_{t \in [0, \frac{n}{2}[}, k \in [0, n[$
 
-* $
-week_k = \{meeting_{t}\}_{t \in [0, \frac{n}{2}[}, k \in [0, n[
-$
-
-* $
-\forall i, j \in I_n, i \neq j,
-week_i \cap week_j = \empty
-$
+* $\forall i, j \in I_n, i \neq j, week_i \cap week_j = \empty$
 
 
 Thus,
@@ -88,20 +80,7 @@ Example for $n = 4$, we can represent the $\frac{n^2-n}{2} possibilities as a tr
 3|N/A|N/A|N/A|to meet|
 4|N/A|N/A|N/A|N/A|
 
-
-```plantuml
-@startuml
-state employee_1 {
-}
-employee_1 --> employee_2
-employee_1 --> employee_3
-employee_1 --> employee_4
-employee_2 --> employee_3
-employee_2 --> employee_4
-employee_3 --> employee_4
-
-@enduml
-```
+![bubble](./documentation/bubble_02.svg)
 
 I sorted the vertices according to 5 different methods:
 
@@ -120,48 +99,7 @@ The strategy is to explore each of these sorting methods until one works. It is 
 
 In the following example for $n=4$, the second sorting algorith was used (most neighbors first, smallest ID first). After three weeks, all employees have met: no vertex remain in the graph.
 
-```plantuml
-@startuml
-state week_1{
-    state "employee 1" as e11
-    state "employee 2" as e12
-    state "employee 3" as e13
-    state "employee 4" as e14
-
-    e11 --> e12 : select
-    e11 --> e13 : reject
-    e11 --> e14 : reject
-    e12 --> e13 : reject
-    e12 --> e14 : reject
-    e13 --> e14 : select
-}
-state week_2 {
-    state "employee 1" as e21
-    state "employee 2" as e22
-    state "employee 3" as e23
-    state "employee 4" as e24
-
-    e21 --> e23 : select
-    e21 --> e24 : reject
-    e22 --> e23 : reject
-    e22 --> e24 : select
-}
-state week_3 {
-    state "employee 1" as e31
-    state "employee 2" as e32
-    state "employee 3" as e33
-    state "employee 4" as e34
-
-    e31 --> e34 : select
-    e32 --> e33 : select
-}
-[*] --> week_1
-week_1 --> week_2
-week_2 --> week_3
-week_3 --> good
-
-@enduml
-```
+![bubble](./documentation/bubble_01.svg)
 
 ## Timing management <a name="Timing_management"></a>
 
@@ -192,7 +130,7 @@ I implemented a basic timeout as follow.
         algo = Thread(target=function_to_run, args=(<parameters>), kwargs={'signal':signal, 'result':result}
 
         algo.start()
-        timer.start()
+        timer.start() 
 
         timer.join()
         algo.join()
