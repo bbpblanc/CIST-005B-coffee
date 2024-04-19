@@ -37,7 +37,7 @@ Hence, $n-1$ weeks are needed to have all $n$ employees meeting each other once
 
 * $week_k = \{meeting_{t}\}_{t \in [0, \frac{n}{2}[}, k \in [0, n[$
 
-* $\forall i, j \in I_n, i \neq j, week_i \cap week_j = \empty$
+* $\forall i, j \in I_n, i \neq j, week_i \cap week_j = \emptyset$
 
 
 Thus,

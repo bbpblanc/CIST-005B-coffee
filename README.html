@@ -395,20 +395,13 @@ You can have your own design to cover the requirements but you should consider a
 <p>Hence, $n-1$ weeks are needed to have all $n$ employees meeting each other once</p>
 <ul>
 <li>
-<p>$
-meeting_k = (employee_i, employee_j)_k, (i,j) \in [0,n[^2, i \neq j, k \in [0,\frac{n^2-n}{2}[
-$</p>
+<p>$meeting_k = (employee_i, employee_j)_k, (i,j) \in [0,n[^2, i \neq j, k \in [0,\frac{n^2-n}{2}[$</p>
 </li>
 <li>
-<p>$
-week_k = {meeting_{t}}_{t \in [0, \frac{n}{2}[}, k \in [0, n[
-$</p>
+<p>$week_k = {meeting_{t}}_{t \in [0, \frac{n}{2}[}, k \in [0, n[$</p>
 </li>
 <li>
-<p>$
-\forall i, j \in I_n, i \neq j,
-week_i \cap week_j = \empty
-$</p>
+<p>$\forall i, j \in I_n, i \neq j, week_i \cap week_j = \emptyset$</p>
 </li>
 </ul>
 <p>Thus,</p>
@@ -467,18 +460,7 @@ $</p>
 </tr>
 </tbody>
 </table>
-<pre class="hljs"><code><div>@startuml
-state employee_1 {
-}
-employee_1 --&gt; employee_2
-employee_1 --&gt; employee_3
-employee_1 --&gt; employee_4
-employee_2 --&gt; employee_3
-employee_2 --&gt; employee_4
-employee_3 --&gt; employee_4
-
-@enduml
-</div></code></pre>
+<p><img src="./documentation/bubble_02.svg" alt="bubble"></p>
 <p>I sorted the vertices according to 5 different methods:</p>
 <table>
 <thead>
@@ -522,47 +504,7 @@ employee_3 --&gt; employee_4
 <li>the time to explore the sequences takes unreasonable time, hence aborted</li>
 </ol>
 <p>In the following example for $n=4$, the second sorting algorith was used (most neighbors first, smallest ID first). After three weeks, all employees have met: no vertex remain in the graph.</p>
-<pre class="hljs"><code><div>@startuml
-state week_1{
-    state &quot;employee 1&quot; as e11
-    state &quot;employee 2&quot; as e12
-    state &quot;employee 3&quot; as e13
-    state &quot;employee 4&quot; as e14
-
-    e11 --&gt; e12 : select
-    e11 --&gt; e13 : reject
-    e11 --&gt; e14 : reject
-    e12 --&gt; e13 : reject
-    e12 --&gt; e14 : reject
-    e13 --&gt; e14 : select
-}
-state week_2 {
-    state &quot;employee 1&quot; as e21
-    state &quot;employee 2&quot; as e22
-    state &quot;employee 3&quot; as e23
-    state &quot;employee 4&quot; as e24
-
-    e21 --&gt; e23 : select
-    e21 --&gt; e24 : reject
-    e22 --&gt; e23 : reject
-    e22 --&gt; e24 : select
-}
-state week_3 {
-    state &quot;employee 1&quot; as e31
-    state &quot;employee 2&quot; as e32
-    state &quot;employee 3&quot; as e33
-    state &quot;employee 4&quot; as e34
-
-    e31 --&gt; e34 : select
-    e32 --&gt; e33 : select
-}
-[*] --&gt; week_1
-week_1 --&gt; week_2
-week_2 --&gt; week_3
-week_3 --&gt; good
-
-@enduml
-</div></code></pre>
+<p><img src="./documentation/bubble_01.svg" alt="bubble"></p>
 <h2 id="timing-management-a-name%22timingmanagement%22a">Timing management <a name="Timing_management"></a></h2>
 <p>As previously seen, an algorithm (or all) may not terminate timely. To &quot;<em>give a chance</em>&quot; to each sorting algorithm, I implemented a timeout using a multi-threading approach. Each algorithm has a certain amount of time to finish, if not, the timeout kils its execution, to move to the next sorting method.</p>
 <p>According to the number of nodes to process, it may be reasonable to increase the timeout. For example, up to 32 employees, 1 second is enough to complete. Above 32, no algorithm can finish within 1 second, hence increasing the throttle to a 5-second timeout.</p>
@@ -588,7 +530,7 @@ def arbiter(time_slice):
     algo = Thread(target=function_to_run, args=(&lt;parameters&gt;), kwargs={'signal':signal, 'result':result}
 
     algo.start()
-    timer.start()
+    timer.start() 
 
     timer.join()
     algo.join()
